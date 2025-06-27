@@ -1,28 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
-  <title>Encuesta simple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pregunta Especial</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fce4ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .carta, .pregunta {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      transition: all 0.5s ease;
+    }
+    .pregunta {
+      display: none;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .si {
+      background-color: #ff4081;
+      color: white;
+    }
+    .no {
+      background-color: #f8bbd0;
+      color: #880e4f;
+      position: relative;
+    }
+    .mensaje {
+      display: none;
+      font-size: 20px;
+      margin-top: 20px;
+      color: #4caf50;
+    }
+  </style>
 </head>
-
 <body>
-  <h2>¿Te gustó el producto?</h2>
-  <button onclick="enviarRespuesta('Sí')">Sí</button>
-  <button onclick="enviarRespuesta('No')">No</button>
+
+  <div class="carta" id="carta" onclick="mostrarPregunta()">
+    <h2>Haz clic para abrir esta sorpresa 💌 👇🏼</h2>
+  </div>
+
+  <div class="pregunta" id="pregunta">
+    <h1>Niña Bonita ☺️</h1>
+    <h2>¿Quieres salir conmigo el día de hoy?</h2>
+    <button class="si" onclick="enviarRespuesta('Sí')">Sí 💖</button>
+    <button class="no" id="btnNo" onclick="enviarRespuesta('No')">No 🙈</button>
+    <div class="mensaje" id="mensaje">¡Sabía que dirías que sí! 💕</div>
+  </div>
 
   <script>
+    function mostrarPregunta() {
+      document.getElementById('carta').style.display = 'none';
+      document.getElementById('pregunta').style.display = 'block';
+    }
+
+    let btnNo = document.getElementById('btnNo');
+    let intentos = 0;
+    btnNo.addEventListener('mouseover', () => {
+      if (intentos < 3) {
+        btnNo.style.position = 'absolute';
+        btnNo.style.top = Math.random() * 80 + '%';
+        btnNo.style.left = Math.random() * 80 + '%';
+        intentos++;
+      } else {
+        btnNo.style.display = 'none';
+      }
+    });
+
     function enviarRespuesta(respuesta) {
       fetch('https://api-encuesta.onrender.com/guardar_respuesta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ respuesta })
       })
-        .then(res => res.json())
-        .then(data => alert(data.mensaje))
-        .catch(err => alert("Error al enviar respuesta"));
+      .then(res => res.json())
+      .then(data => {
+        console.log('Respuesta guardada:', data);
+        if (respuesta === 'Sí') {
+          document.getElementById('mensaje').style.display = 'block';
+        }
+      })
+      .catch(error => console.error('Error al guardar la respuesta:', error));
     }
   </script>
-</body>
 
+</body>
 </html>
