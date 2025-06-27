@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Encuesta simple</title>
+</head>
+
+<body>
+  <h2>¿Te gustó el producto?</h2>
+  <button onclick="enviarRespuesta('Sí')">Sí</button>
+  <button onclick="enviarRespuesta('No')">No</button>
+
+  <script>
+    function enviarRespuesta(respuesta) {
+      fetch('https://api-encuesta.onrender.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ respuesta })
+      })
+        .then(res => res.json())
+        .then(data => alert(data.mensaje))
+        .catch(err => alert("Error al enviar respuesta"));
+    }
+  </script>
+</body>
+
+</html>
