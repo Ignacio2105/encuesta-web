@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta para Jadek</title>
+  <link rel="stylesheet" href="styleCarta.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Para: Jadek A. Rentería M.</h1>
+  </div>
+
+  <div class="letter_ct">
+    <input type="checkbox" id="check" />
+    <label for="check">
+      <span class="letter main"></span>
+      <div class="note">
+        <p class="int">Srta. Jadek,</p>
+        <p>
+          Me hubiese gustado mostrarte esta carta de forma física, si embargo, no es impedimento para expresarte
+          algunas cosas.
+          Es sorprendente que esté temblando al escribir esta carta, no solamente por el frío, sino porque mi corazón
+          se siente arrepentido de lo que ha pasado estos últimos días. Suelen decir que en una pelea no solo pierde
+          quien da su brazo a torcer sino ambas partes, y debo decir que por mi parte, he perdido. Soy un maldito
+          orgulloso, que encima cree que tiene razón en todo lo que dice. Mi más grande defecto me ha hecho terminar aquí.
+          Quizás sirva de muy poco pedirte disculpas y perdón, o incluso esta carta. Pero estoy dispuesto a dar todo de
+          mí para que tu corazón pueda perdonarme.
+          Hay tantas cosas que me gustaría decirte, pero mi lema siempre a sido "hechos y no palabras". Por eso te
+          pido tener la dicha de verte, y demostrarte que verdaderamente quiero tu
+          perdón.
+        </p>
+      </div>
+      <span class="front"></span>
+      <span class="letter flap-bg"></span>
+      <span class="letter flap"></span>
+      <span class="heart"></span>
+    </label>
+  </div>
+
+  <div class="txt">
+    <h3>Hecho con amor por J. Ignacio</h3>
+    <h6>Pd. Espero disfrutes de la canción.</h6>
+  </div>
+
+  <!-- Audio oculto -->
+  <audio id="audioCarta" loop>
+    <source src="ABBA - Chiquitita (En Español).mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script>
+    const checkbox = document.getElementById('check');
+    const audio = document.getElementById('audioCarta');
+    audio.volume = 0.2;
+
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        audio.play().catch(err => {
+          console.warn("El navegador bloqueó la reproducción automática:", err);
+        });
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+  </script>
+</body>
+
+</html>
